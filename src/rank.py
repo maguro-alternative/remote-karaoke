@@ -51,34 +51,27 @@ def wavcomp():
     # 使用する特徴量を抽出し、リストに格納
     feature_list = []
     for x_and_fs in x_and_fs_list:
-        x = x_and_fs[0]
-        fs = x_and_fs[1]
-        feature = librosa.feature.spectral_centroid(x, fs)
+        feature = librosa.feature.spectral_centroid(x_and_fs[0], x_and_fs[1])
         feature_list.append(feature)
 
     del x_and_fs_list
     gc.collect()
-
-    # 比較の基準とする特徴量
-    reference_index = 0
-    reference_feature = feature_list[reference_index]
 
     del path_list
     gc.collect()
 
     # 類似度を計算し、リストに格納
     eval_list = []
-    for target_feature in feature_list[1::2]:
-        ac, wp = librosa.sequence.dtw(reference_feature, target_feature)
-        # -1で一番最後の要素を取得
-        eval = 1 - (ac[-1][-1] / np.array(ac).max())
-        eval_list.append(eval)
+    ac, wp = librosa.sequence.dtw(feature_list[0], feature_list[1])
+    # -1で一番最後の要素を取得
+    eval = 1 - (ac[-1][-1] / np.array(ac).max())
+    eval_list.append(eval)
 
     # 類似度を一覧表示
     print("> | {} , {} : {}".format("Reference", "Target", "Score"))
     for target_index in range(len(eval_list)):
         eval = eval_list[target_index]
-        print("> | {} , {} : {}".format(reference_index + 1, target_index + 1, round(eval, 4)))
+        print("> | {} , {} : {}".format(1, target_index + 1, round(eval, 4)))
 
     print("")
 

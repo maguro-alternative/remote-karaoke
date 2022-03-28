@@ -18,9 +18,6 @@ Token=json_load["token"]
 async def on_ready():
     print("起動DAAAAAAAAAAAAAA!!")
 
-# @bot.command()
-# async def start_record(ctx):
-# @bot.slash_command(guild_ids=[838937935822585928,854350169055297576])
 @bot.slash_command()
 async def start_record(ctx):
     print("record")
@@ -58,7 +55,7 @@ async def finished_callback(sink, ctx):
 
     
 
-#@bot.slash_command(guild_ids=[838937935822585928,854350169055297576])
+
 @bot.slash_command()
 async def stop_recording(ctx):
     print("re")
@@ -66,7 +63,6 @@ async def stop_recording(ctx):
     await ctx.respond("Stopped!")
     await ctx.voice_client.disconnect()
 
-#@bot.slash_command(guild_ids=[838937935822585928,854350169055297576])
 @bot.slash_command()
 async def download(
     ctx: discord.ApplicationContext,
