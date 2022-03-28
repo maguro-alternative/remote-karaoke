@@ -1,5 +1,4 @@
 import gc
-import time
 
 import librosa
 import numpy as np
@@ -10,6 +9,7 @@ def wavbase(wav):   #wavファイルを開く
     base_sound = AudioSegment.from_file(wav, format="wav")
     return base_sound
 
+# サンプリング周波数を計算
 def getSamplingFrequency(path):
     wr = wave.open(path, "r")
     fs = wr.getframerate()
@@ -33,7 +33,7 @@ def onewav():   #wavファイルの秒数を60秒以内に収める
 
         base_sound.export(value, format="wav")
 
-
+# 採点(類似度計算)
 def wavcomp():
 
     path_list=["./wave/sample_music.wav","./wave/sample_voice.wav"]

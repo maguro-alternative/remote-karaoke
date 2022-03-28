@@ -1,11 +1,17 @@
 # remote-karaoke
-Discord上で行うカラオケbot
+Discord上でカラオケを行うbot
 
 # 概要
 youtube-dlで音源を用意、Discordのボイスチャンネルで録音。
 DTWで採点。
 
 # 使い方
+auth.jsonにDiscord Botのトークンを入れます。
+```bash
+{
+    "token" : "ここにDiscord Botのトークンを入れる"
+}
+```
 スラッシュコマンドを使用します。
 ```bash
 # 音源ダウンロード
