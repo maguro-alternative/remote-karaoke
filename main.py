@@ -33,7 +33,7 @@ async def start_record(ctx):
     ctx.voice_client.start_recording(discord.sinks.MP3Sink(), finished_callback, ctx)
 
     source = discord.FFmpegPCMAudio("./wave/sample_music.wav")              # ダウンロードしたwavファイルをDiscordで流せるように変換
-    trans=discord.PCMVolumeTransformer(source,volume=0.5)
+    trans=discord.PCMVolumeTransformer(source,volume=0.3)
     vc.play(trans)  #音源再生
 
     # 再生終了まで待つ

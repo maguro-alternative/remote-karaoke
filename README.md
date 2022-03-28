@@ -5,6 +5,11 @@ Discord上でカラオケを行うbot
 youtube-dlで音源を用意、Discordのボイスチャンネルで録音。
 DTWで採点。
 
+# 注意点
+このbotはカラオケ音源を用意するためyoutube_dlを使用しています。<br>
+違法性はないと判断されていますが、Google社はコンテンツのスクレイピングを全面的に禁止しているので、使用すると**罪に問われる可能性**があります。<br>
+上記のことに関しては責任を負いかねますのでご了承ください。<br>
+
 # 使い方
 auth.jsonにDiscord Botのトークンを入れます。
 ```bash
@@ -34,5 +39,5 @@ pip install ffmpeg-python
 pip install librosa
 pip install numpy
 pip install pydub
-pip install youtube-dl
+pip install youtube_dl
 ```
