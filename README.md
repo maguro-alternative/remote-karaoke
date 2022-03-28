@@ -18,7 +18,7 @@ DTWで採点。
 
 # 使うライブラリ
 環境 Python 3.8.6 64-bit
-ffmpeg<https://ffmpeg.org/download.html>
+ffmpeg <https://ffmpeg.org/download.html>
 
 ```bash
 pip install discord
