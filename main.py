@@ -44,10 +44,6 @@ async def start_record(ctx):
     await ctx.voice_client.disconnect()
 
 async def finished_callback(sink, ctx):
-    recorded_users = [
-        f"<@{user_id}>"
-        for user_id, audio in sink.audio_data.items()
-    ]
     file = open('singid.txt', 'r')  #送信したメッセージidの読み込み
     singid = int(file.read())
     for user_id, audio in sink.audio_data.items():
