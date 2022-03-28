@@ -15,6 +15,7 @@ DTWで採点。
 # 中断
 /stop_recording
 ```
+![](./pic/sample.png)
 
 # 使うライブラリ
 環境 Python 3.8.6 64-bit <br>
