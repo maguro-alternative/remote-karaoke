@@ -36,9 +36,6 @@ def onewav():   #wavファイルの秒数を60秒以内に収める
 
 def wavcomp():
 
-    # 処理時間計測開始
-    start = time.time()
-
     path_list=["./wave/sample_music.wav","./wave/sample_voice.wav"]
     
     # 各wavファイルの振幅データ列とサンプリング周波数を取得し、リストに格納
@@ -65,20 +62,8 @@ def wavcomp():
     ac, wp = librosa.sequence.dtw(feature_list[0], feature_list[1])
     # -1で一番最後の要素を取得
     eval = 1 - (ac[-1][-1] / np.array(ac).max())
-    eval_list.append(eval)
+    print("Score : {}".format(round(eval,4)))
 
-    # 類似度を一覧表示
-    print("> | {} , {} : {}".format("Reference", "Target", "Score"))
-    for target_index in range(len(eval_list)):
-        eval = eval_list[target_index]
-        print("> | {} , {} : {}".format(1, target_index + 1, round(eval, 4)))
-
-    print("")
-
-    # 処理時間計測終了
-    end = time.time()
-    # 処理時間表示
-    print("Total elapsed time : {}[sec]".format(round(end - start, 4)))
     return eval*100
 
 def wavmain():
