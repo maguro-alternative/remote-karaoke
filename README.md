@@ -17,12 +17,13 @@ DTWで採点。
 ```
 
 # 使うライブラリ
-環境 Python 3.8.6 64-bit
-ffmpeg <https://ffmpeg.org/download.html>
+環境 Python 3.8.6 64-bit <br>
+ffmpeg <https://ffmpeg.org/download.html><br>
 
 ```bash
 pip install discord
 pip install git+https://github.com/Pycord-Development/pycord
+pip install ffmpeg-python
 pip install librosa
 pip install numpy
 pip install pydub
