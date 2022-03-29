@@ -20,7 +20,12 @@ async def on_ready():
 
 @bot.slash_command()
 async def start_record(ctx):
-    print("record")
+    try :   # 再生中かどうか判断
+        print(ctx.guild.voice_client.is_playing())
+        await ctx.respond("再生中です。")
+        return
+    except AttributeError:
+        print("record")
     await ctx.respond("Recording...")
     # コマンドを使用したユーザーのIDを書き込む
     file = open('singid.txt', 'w')
@@ -33,7 +38,7 @@ async def start_record(ctx):
     ctx.voice_client.start_recording(discord.sinks.MP3Sink(), finished_callback, ctx)
 
     source = discord.FFmpegPCMAudio("./wave/sample_music.wav")              # ダウンロードしたwavファイルをDiscordで流せるように変換
-    trans=discord.PCMVolumeTransformer(source,volume=0.3)
+    trans = discord.PCMVolumeTransformer(source,volume=0.3)
     vc.play(trans)  #音源再生
 
     # 再生終了まで待つ
@@ -62,7 +67,7 @@ async def finished_callback(sink, ctx):
 # 録音停止(非推奨)
 @bot.slash_command()
 async def stop_recording(ctx):
-    print("re")
+    
     # 録音停止
     ctx.voice_client.stop_recording() 
     await ctx.respond("Stopped!")
@@ -74,11 +79,25 @@ async def stop_recording(ctx):
 async def download(
     ctx: discord.ApplicationContext,
     url: Option(str, required=True, description="urlをいれて", )):
-    print(ctx.author)
+
+    try :   # 再生中か判断
+        print(ctx.guild.voice_client.is_playing())
+        await ctx.respond("再生中です。")
+        return
+    except AttributeError:
+        print("download")
+
     await ctx.respond("downloading...\n"+url) 
     # youtube-dlでダウンロード
     you(url)
     await ctx.channel.send(f"<@{ctx.author.id}> ダウンロード完了! /start_record で採点します。")
+
+# テスト用
+@bot.slash_command()
+async def test(ctx):
+    await ctx.respond("test")
+    print(ctx.author.voice.channel)
+    # print(ctx.guild.voice_client.is_playing())
 
 # youtube-dlでダウンロード
 def you(test_video):

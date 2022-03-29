@@ -58,7 +58,6 @@ def wavcomp():
     gc.collect()
 
     # 類似度を計算し、リストに格納
-    eval_list = []
     ac, wp = librosa.sequence.dtw(feature_list[0], feature_list[1])
     # -1で一番最後の要素を取得
     eval = 1 - (ac[-1][-1] / np.array(ac).max())
