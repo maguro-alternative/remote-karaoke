@@ -17,6 +17,9 @@ Token=json_load["token"]
 @bot.event
 async def on_ready():
     print("起動DAAAAAAAAAAAAAA!!")
+    activity=discord.Game(name="Remote-Karaoke")
+
+    await bot.change_presence(activity=activity)
 
 @bot.slash_command()
 async def start_record(ctx):
@@ -26,13 +29,17 @@ async def start_record(ctx):
         return
     except AttributeError:
         print("record")
-    await ctx.respond("Recording...")
-    # コマンドを使用したユーザーのIDを書き込む
-    file = open('singid.txt', 'w')
-    file.write(str(ctx.author.id))
-    file.close()
     # コマンドを使用したユーザーのボイスチャンネルに接続
-    vc = await ctx.author.voice.channel.connect()
+    try:
+        vc = await ctx.author.voice.channel.connect()
+        await ctx.respond("Recording...")
+        # コマンドを使用したユーザーのIDを書き込む
+        file = open('singid.txt', 'w')
+        file.write(str(ctx.author.id))
+        file.close()
+    except AttributeError:
+        await ctx.respond("ボイスチャンネルに入ってください。")
+        return
 
     # 録音開始。mp3で帰ってくる。wavだとなぜか壊れる。
     ctx.voice_client.start_recording(discord.sinks.MP3Sink(), finished_callback, ctx)
@@ -61,8 +68,14 @@ async def finished_callback(sink, ctx):
             song = AudioSegment.from_file(audio.file, format="mp3")
             song.export("./wave/sample_voice.wav", format='wav')
 
-            # 採点結果を表示
-            await ctx.channel.send(f"<@{user_id}> 点数 "+str(src.rank.wavmain())+"点です！")
+            # 歌っているか判断。時間が原曲の半分以下の場合採点しない。
+            wavRatio=src.rank.wavsecond("./wave/sample_voice.wav")/src.rank.wavsecond("./wave/sample_music.wav")
+            print(wavRatio)
+            if wavRatio>=0.5:
+                # 採点結果を表示
+                await ctx.channel.send(f"<@{user_id}> 点数 "+str(src.rank.wavmain())+"点です！")
+            else:
+                await ctx.channel.send(f"<@{user_id}> 歌っている時間が短く、正常に採点出来ませんでした。")
 
 # 録音停止(非推奨)
 @bot.slash_command()

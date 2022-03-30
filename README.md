@@ -30,7 +30,7 @@ auth.jsonにDiscord Botのトークンを入れます。
 
 # 使うライブラリ
 環境 Python 3.8.6 64-bit <br>
-ffmpeg <https://ffmpeg.org/download.html><br>
+ffmpeg <https://ffmpeg.org/download.html>(main.pyと同じ階層に入れるか、環境変数にパスを通して利用してください)<br>
 
 ```bash
 pip install discord

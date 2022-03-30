@@ -21,22 +21,23 @@ def wavsecond(wav): #wavファイルの秒数を計算
     return base_sound.duration_seconds
 
 def onewav():   #wavファイルの秒数を60秒以内に収める
-    values=["./wave/sample_music.wav","./wave/sample_voice.wav"]
-    for value in values:
-        time=wavbase(value).duration_seconds
+    before_values=["./wave/sample_music.wav","./wave/sample_voice.wav"]
+    after_values=["./wave/ratio_music.wav","./wave/ratio_voice.wav"]
+    for before_value,after_value in zip(before_values,after_values):
+        time=wavbase(before_value).duration_seconds
 
         if time>=60:
             speed = time/60
-            base_sound = wavbase(value).speedup(playback_speed=speed, crossfade=0)
+            base_sound = wavbase(before_value).speedup(playback_speed=speed, crossfade=0)
         else :
-            base_sound=wavbase(value)
+            base_sound=wavbase(before_value)
 
-        base_sound.export(value, format="wav")
+        base_sound.export(after_value, format="wav")
 
 # 採点(類似度計算)
 def wavcomp():
 
-    path_list=["./wave/sample_music.wav","./wave/sample_voice.wav"]
+    path_list=["./wave/ratio_music.wav","./wave/ratio_voice.wav"]
     
     # 各wavファイルの振幅データ列とサンプリング周波数を取得し、リストに格納
     x_and_fs_list = []
@@ -57,7 +58,7 @@ def wavcomp():
     del path_list
     gc.collect()
 
-    # 類似度を計算し、リストに格納
+    # 類似度を計算
     ac, wp = librosa.sequence.dtw(feature_list[0], feature_list[1])
     # -1で一番最後の要素を取得
     eval = 1 - (ac[-1][-1] / np.array(ac).max())
